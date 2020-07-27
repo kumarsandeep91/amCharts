@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useStyletron } from "styletron-react";
-import { Button, Typography } from "antd";
+import { Button, Typography, Spin } from "antd";
 
 import AmCharts from "@amcharts/amcharts3-react";
 
@@ -12,7 +12,7 @@ const { Paragraph, Title } = Typography;
 export const Home = () => {
   return (
     <App>
-      <h1>Home p</h1>
+      <h1>Home</h1>
     </App>
   );
 };
@@ -34,38 +34,42 @@ export const Networth = () => {
   }, []);
   return (
     <App>
-      {/*amCharts here */}
-      {isApiFailed ? (
-        <Title>API Error. Try again later</Title>
-      ) : (
-        <AmCharts.React
-          className="my-class"
-          style={{
-            width: "100%",
-            height: "500px",
-          }}
-          options={{
-            type: "serial",
-            dataProvider: chartData,
-            categoryField: "traded_on",
-            graphs: [
-              {
-                valueField: "net_worth",
-                type: "line", // other values includes "line", "column", "step", "smoothedLine", "candlestick", "ohlc"
-                fillAlphas: 0.8,
-                angle: 30,
-                depth3D: 15,
+      <div>
+        {/*amCharts here */}
+        {isApiFailed ? (
+          <Title>API Error. Try again later</Title>
+        ) : chartData.length === 0 ? (
+          <Spin />
+        ) : (
+          <AmCharts.React
+            className="my-class"
+            style={{
+              width: "100%",
+              height: "500px",
+            }}
+            options={{
+              type: "serial",
+              dataProvider: chartData,
+              categoryField: "traded_on",
+              graphs: [
+                {
+                  valueField: "net_worth",
+                  type: "line", // other values includes "line", "column", "step", "smoothedLine", "candlestick", "ohlc"
+                  fillAlphas: 0.8,
+                  angle: 30,
+                  depth3D: 15,
+                },
+              ],
+              categoryAxis: {
+                autoGridCount: false,
+                gridCount: chartData.length,
+                gridPosition: "start",
+                labelRotation: 90,
               },
-            ],
-            categoryAxis: {
-              autoGridCount: false,
-              gridCount: chartData.length,
-              gridPosition: "start",
-              labelRotation: 90,
-            },
-          }}
-        />
-      )}
+            }}
+          />
+        )}
+      </div>
     </App>
   );
 };
