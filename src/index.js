@@ -1,21 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { Provider as StyletronProvider } from "styletron-react";
 import { Client as Styletron } from "styletron-engine-atomic";
 
 import "./index.css";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import rootReducer from "./reducers";
+import { Networth, Holdings, Home } from "./components";
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
-      <Route path="/" component={App} />
+      <Switch>
+        <Route path="/networth" component={Networth} />
+        <Route path="/holdings" component={Holdings} />
+        <Route path="/" component={Home} />
+      </Switch>
     </Router>
   </Provider>
 );

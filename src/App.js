@@ -1,29 +1,29 @@
 import React from "react";
 import { useStyletron } from "styletron-react";
 
-import logo from "./logo.svg";
 import "./App.css";
+import "antd/dist/antd.css";
+import { Footer, Header } from "./components";
 
-function App() {
+const App = (props) => {
   const [css] = useStyletron();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className={css({ color: "red", backgroundColor: "#666" })}>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className={css({
+        display: "grid",
+        gridGap: "24px",
+        justifyContent: "center",
+        alignContent: "center",
+        height: "100vh",
+        backgroundColor: "rgb(94, 92, 230)",
+      })}
+    >
+      <Header />
+      {props.children}
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
