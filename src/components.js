@@ -10,7 +10,7 @@ const { Paragraph, Title } = Typography;
 export const Home = () => {
   return (
     <App>
-      <h1>Home</h1>
+      <h1>Home p</h1>
     </App>
   );
 };
