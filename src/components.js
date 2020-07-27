@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useStyletron } from "styletron-react";
 import { Button, Typography } from "antd";
+
+import AmCharts from "@amcharts/amcharts3-react";
 
 import App from "./App";
 
@@ -16,9 +18,54 @@ export const Home = () => {
 };
 
 export const Networth = () => {
+  const url = "https://canopy-frontend-task.now.sh/api/networth";
+  const [chartData, setChartData] = useState([]);
+  const [isApiFailed, setApi] = useState(false);
+
+  useEffect(() => {
+    // TODO: Use Proper Validations
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+        if (json) setChartData(json);
+        else setApi(true);
+      })
+      .catch((err) => setApi(true));
+  }, []);
   return (
     <App>
-      <h1>Networth</h1>
+      {/*amCharts here */}
+      {isApiFailed ? (
+        <Title>API Error. Try again later</Title>
+      ) : (
+        <AmCharts.React
+          className="my-class"
+          style={{
+            width: "100%",
+            height: "500px",
+          }}
+          options={{
+            type: "serial",
+            dataProvider: chartData,
+            categoryField: "traded_on",
+            graphs: [
+              {
+                valueField: "net_worth",
+                type: "line", // other values includes "line", "column", "step", "smoothedLine", "candlestick", "ohlc"
+                fillAlphas: 0.8,
+                angle: 30,
+                depth3D: 15,
+              },
+            ],
+            categoryAxis: {
+              autoGridCount: false,
+              gridCount: chartData.length,
+              gridPosition: "start",
+              labelRotation: 90,
+            },
+          }}
+        />
+      )}
     </App>
   );
 };
