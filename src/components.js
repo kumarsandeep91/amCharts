@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useStyletron } from "styletron-react";
@@ -22,13 +23,37 @@ export const Networth = () => {
   const [chartData, setChartData] = useState([]);
   const [isApiFailed, setApi] = useState(false);
 
+  const parseData = (data) => {
+    let parsedData = data.filter(
+      (obj) => moment().diff(moment(obj.traded_on), "days") <= 365
+    );
+    console.log(data);
+    return parsedData;
+  };
+
   useEffect(() => {
-    // TODO: Use Proper Validations
     fetch(url)
       .then((res) => res.json())
       .then((json) => {
-        if (json) setChartData(json);
-        else setApi(true);
+        // TODO: date parsing
+        console.log(json.length);
+
+        if (json) {
+          let parsedData = parseData(json);
+
+          parsedData.sort((a, b) => {
+            if (
+              moment(a.traded_on, "DD-MM-YYYY").isAfter(
+                moment(b.traded_on, "DD-MM-YYYY")
+              )
+            )
+              return 0;
+            else return -1;
+          });
+          setChartData(parsedData);
+        } else {
+          setApi(true);
+        }
       })
       .catch((err) => setApi(true));
   }, []);
