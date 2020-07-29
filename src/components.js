@@ -7,6 +7,7 @@ import { Button, Typography, Spin } from "antd";
 import AmCharts from "@amcharts/amcharts3-react";
 
 import App from "./App";
+import orm from "./db";
 
 const { Paragraph, Title } = Typography;
 
@@ -95,49 +96,6 @@ export const Networth = () => {
           />
         )}
       </div>
-    </App>
-  );
-};
-
-export const Holdings = () => {
-  const [tableData, setTableData] = useState([]);
-  const url = "https://canopy-frontend-task.now.sh/api/holdings";
-
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((json) => setTableData(json.payload))
-      .catch((err) => console.log("API Error"));
-  }, []);
-
-  return (
-    <App>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Ticker</th>
-            <th>Asset Class</th>
-            <th>Average Price</th>
-            <th>Market Price</th>
-            <th>Latest %change</th>
-            <th>Market Value(Base CCY)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((data) => (
-            <tr>
-              <td>{data.name}</td>
-              <td>{data.ticker}</td>
-              <td>{data.asset_class}</td>
-              <td>{data.avg_price}</td>
-              <td>{data.market_price}</td>
-              <td>{data.latest_chg_pct}</td>
-              <td>{data.market_value_ccy}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </App>
   );
 };

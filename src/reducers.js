@@ -1,9 +1,7 @@
 import { combineReducers } from "redux";
+import { createReducer } from "redux-orm";
+import orm from "./db";
 
-const x = (state = [], action) => {
-  return state;
-};
-
-const rootReducer = combineReducers({ x });
+const rootReducer = combineReducers({ orm: createReducer(orm) });
 
 export default rootReducer;

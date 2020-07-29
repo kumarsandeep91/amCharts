@@ -10,7 +10,8 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
 import rootReducer from "./reducers";
-import { Networth, Holdings, Home } from "./components";
+import { Networth, Home } from "./components";
+import Holdings from "./holdings";
 
 const Root = ({ store }) => (
   <Provider store={store}>
