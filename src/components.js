@@ -7,7 +7,6 @@ import { Button, Typography, Spin } from "antd";
 import AmCharts from "@amcharts/amcharts3-react";
 
 import App from "./App";
-import orm from "./db";
 
 const { Paragraph, Title } = Typography;
 
