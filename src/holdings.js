@@ -48,13 +48,13 @@ const Holding = ({ tableData }) => {
           </thead>
           {tableData.map((data) => (
             <tbody id={data.id}>
-              <tr className={css({ backgroundColor: "red" })}>
-                <td>{data.name}</td>
-                <td>{data.ticker}</td>
-                <td>{data.avg_price}</td>
-                <td>{data.market_price}</td>
-                <td>{data.latest_chg_pct}</td>
-                <td>{data.market_value_ccy}</td>
+              <tr
+                className={css({ backgroundColor: "red" })}
+                onClick={() =>
+                  alert("This will collapse soon. feature is on the way.")
+                }
+              >
+                <td colspan="6">{data.name}</td>
               </tr>
               {data.holdings.map((holding) => (
                 <tr id={holding.id}>
