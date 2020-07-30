@@ -1,4 +1,4 @@
-import { Model, ORM, attr, fk } from "redux-orm";
+import { Model, ORM, attr, fk, many } from "redux-orm";
 import { v4 as uuid4 } from "uuid";
 
 class Holding extends Model {
@@ -25,7 +25,11 @@ Holding.fields = {
   market_price: attr(),
   market_value_ccy: attr(),
   latest_chg_pct: attr(),
-  assetId: fk("AssetClass", "asset_class"),
+  assetId: fk({
+    to: "AssetClass",
+    as: "asset_class",
+    relatedName: "holdings",
+  }),
 };
 // {
 //     name: "Property: The Sail @ Marina Bay Unit 68-020000 3BR 1991sqft",

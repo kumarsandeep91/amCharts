@@ -31,6 +31,7 @@ const Holding = ({ tableData }) => {
       .catch((err) => console.log(`API Error...${err}`));
   }, []);
   const [css] = useStyletron();
+
   return (
     <App>
       <div className={css({ overflowX: "auto" })}>
@@ -39,26 +40,34 @@ const Holding = ({ tableData }) => {
             <tr>
               <th>Name</th>
               <th>Ticker</th>
-              <th>Asset Class</th>
               <th>Average Price</th>
               <th>Market Price</th>
               <th>Latest %change</th>
               <th>Market Value(Base CCY)</th>
             </tr>
           </thead>
-          <tbody>
-            {tableData.map((data) => (
-              <tr>
+          {tableData.map((data) => (
+            <tbody id={data.id}>
+              <tr className={css({ backgroundColor: "red" })}>
                 <td>{data.name}</td>
                 <td>{data.ticker}</td>
-                <td>{data.asset_class}</td>
                 <td>{data.avg_price}</td>
                 <td>{data.market_price}</td>
                 <td>{data.latest_chg_pct}</td>
                 <td>{data.market_value_ccy}</td>
               </tr>
-            ))}
-          </tbody>
+              {data.holdings.map((holding) => (
+                <tr id={holding.id}>
+                  <td>{holding.name}</td>
+                  <td>{holding.ticker}</td>
+                  <td>{holding.avg_price}</td>
+                  <td>{holding.market_price}</td>
+                  <td>{holding.latest_chg_pct}</td>
+                  <td>{holding.market_value_ccy}</td>
+                </tr>
+              ))}
+            </tbody>
+          ))}
         </table>
       </div>
     </App>
