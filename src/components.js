@@ -19,6 +19,7 @@ export const Home = () => {
 };
 
 export const Networth = () => {
+  const [css] = useStyletron();
   const url = "https://canopy-frontend-task.now.sh/api/networth";
   const [chartData, setChartData] = useState([]);
   const [isApiFailed, setApi] = useState(false);
@@ -66,33 +67,34 @@ export const Networth = () => {
         ) : chartData.length === 0 ? (
           <Spin />
         ) : (
-          <AmCharts.React
-            className="my-class"
-            style={{
-              width: "100%",
-              height: "500px",
-            }}
-            options={{
-              type: "serial",
-              dataProvider: chartData,
-              categoryField: "traded_on",
-              graphs: [
-                {
-                  valueField: "net_worth",
-                  type: "line", // other values includes "line", "column", "step", "smoothedLine", "candlestick", "ohlc"
-                  fillAlphas: 0.8,
-                  angle: 30,
-                  depth3D: 15,
+          <div className={css({ overflowX: "auto", width: "100%" })}>
+            <AmCharts.React
+              style={{
+                width: "100vw",
+                minHeight: "500px",
+              }}
+              options={{
+                type: "serial",
+                dataProvider: chartData,
+                categoryField: "traded_on",
+                graphs: [
+                  {
+                    valueField: "net_worth",
+                    type: "line", // other values includes "line", "column", "step", "smoothedLine", "candlestick", "ohlc"
+                    fillAlphas: 0.8,
+                    angle: 30,
+                    depth3D: 15,
+                  },
+                ],
+                categoryAxis: {
+                  autoGridCount: false,
+                  gridCount: chartData.length,
+                  gridPosition: "start",
+                  labelRotation: 90,
                 },
-              ],
-              categoryAxis: {
-                autoGridCount: false,
-                gridCount: chartData.length,
-                gridPosition: "start",
-                labelRotation: 90,
-              },
-            }}
-          />
+              }}
+            />
+          </div>
         )}
       </div>
     </App>
